@@ -1,4 +1,5 @@
-package model;
+package rppbackend.model;
+
 
 import java.io.Serializable;
 import java.util.List;
