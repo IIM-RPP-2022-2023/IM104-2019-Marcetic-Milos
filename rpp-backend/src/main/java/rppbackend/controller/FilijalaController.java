@@ -71,7 +71,7 @@ public class FilijalaController {
     public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if (id == -100 && !filijalaService.existsById(id)) {
             jdbcTemplate.execute(
-            		"INSERT INTO filijala (\"id\", \"adresa\", \"broj_pultova\", \"poseduje_sef\", \"banka\") VALUES (-100, 'Test Adresa', 'Test Broj_Pultova', 'Test Poseduje_Sef', 'Test Banka')");
+            		"INSERT INTO filijala (\"id\", \"adresa\", \"broj_pultova\", \"poseduje_sef\", \"banka\") VALUES (-100, 'Test Adresa', 10, true, 3)");
             
         }
 

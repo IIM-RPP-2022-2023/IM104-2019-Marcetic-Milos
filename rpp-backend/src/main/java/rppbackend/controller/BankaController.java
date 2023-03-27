@@ -71,7 +71,7 @@ public ResponseEntity<Banka> updateBanka(@RequestBody Banka banka, @PathVariable
 public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
     if (id == -100 && !bankaService.existsById(id)) {
         jdbcTemplate.execute(
-                "INSERT INTO artikl (\"id\", \"kontakt\", \"naziv\", \"pib\") VALUES (-100, 'Test Kontakt', 'Test Naziv', 'Test Pib')");
+                "INSERT INTO banka (\"id\", \"kontakt\", \"naziv\", \"pib\") VALUES (-100, 'Test Kontakt', 'Test Naziv', 200)");
     }
 
     if (bankaService.existsById(id)) {

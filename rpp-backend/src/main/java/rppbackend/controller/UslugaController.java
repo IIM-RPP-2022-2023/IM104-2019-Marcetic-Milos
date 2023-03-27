@@ -71,7 +71,7 @@ public class UslugaController {
     public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if (id == -100 && !uslugaService.existsById(id)) {
             jdbcTemplate.execute(
-            		"INSERT INTO dobavljac (\"id\", \"naziv\", \"opis_usluge\", \"datum_ugovora\", \"provizija\", \"filijala\", \"korisnik\") VALUES (-100, 'Test Naziv', 'Test Opis_Usluge', 'Test Datum_Ugovora', 'Test Provizija', 'Test Filijala', 'Test Korisnik')");
+            		"INSERT INTO usluga (\"id\", \"naziv\", \"opis_usluge\", \"datum_ugovora\", \"provizija\", \"filijala\", \"korisnik\") VALUES (-100, 'Test Naziv', 'Test Opis_Usluge', '2023-05-08', 500, 5, 5)");
             
         }
 

@@ -67,11 +67,11 @@ public class KorisnikUslugeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 	
-    @DeleteMapping("dobavljac/{id}")
+    @DeleteMapping("korisnik_usluge/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if (id == -100 && !korisnikService.existsById(id)) {
             jdbcTemplate.execute(
-            		"INSERT INTO korisnik (\"id\", \"ime\", \"prezime\", \"maticni_broj\") VALUES (-100, 'Test Ime', 'Test Prezime', 'Test MaticniBroj')");
+            		"INSERT INTO korisnik_usluge (\"id\", \"ime\", \"prezime\", \"maticni_broj\") VALUES (-100, 'Test Ime', 'Test Prezime', 'Test MaticniBroj')");
             
         }
 
