@@ -45,20 +45,20 @@ public class FilijalaController {
 	}
 	
 	@GetMapping("filijala/adresa/{adresa}")
-	public ResponseEntity<List<Filijala>> getByNaziv(@PathVariable("naziv") String adresa){
+	public ResponseEntity<List<Filijala>> getByNaziv(@PathVariable("adresa") String adresa){
 		List<Filijala> filijals = filijalaService.findByNazivContainingIgnoreCase(adresa);
         return new ResponseEntity<>(filijals, HttpStatus.OK);
 	}
 	
 	@PostMapping("filijala")
-	public ResponseEntity<Filijala> addDobavljac(@RequestBody Filijala filijala) {
+	public ResponseEntity<Filijala> addFilijala(@RequestBody Filijala filijala) {
 		Filijala savedFilijala = filijalaService.save(filijala);
         URI location = URI.create("/filijala/" + savedFilijala.getId());
 		return ResponseEntity.created(location).body(savedFilijala);
 	}
 
     @PutMapping(value = "filijala/{id}")
-    public ResponseEntity<Filijala> updateDobavljac(@RequestBody Filijala filijala, @PathVariable("id") Integer id) {
+    public ResponseEntity<Filijala> updateFilijala(@RequestBody Filijala filijala, @PathVariable("id") Integer id) {
         if (filijalaService.existsById(id)) {
         	filijala.setId(id);
         	Filijala savedFilijala = filijalaService.save(filijala);

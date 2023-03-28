@@ -6,8 +6,7 @@ import java.lang.Integer;
 import java.lang.String;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Entity implementation class for Entity: Usluga
  *
