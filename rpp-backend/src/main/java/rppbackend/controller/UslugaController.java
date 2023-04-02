@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import rppbackend.model.Usluga;
 import rppbackend.service.UslugaService;
 
+@CrossOrigin
 @RestController
 public class UslugaController {
 
@@ -28,12 +31,14 @@ public class UslugaController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @ApiOperation(value = "Returns List of all Uslugas")
 	@GetMapping("usluga")
 	public ResponseEntity<List<Usluga>> getAll(){
 		List<Usluga> uslugas = uslugaService.getAll();
         return new ResponseEntity<>(uslugas, HttpStatus.OK);
 	}
 	
+    @ApiOperation(value = "Returns Usluga with id that was forwarded as path variable.")
 	@GetMapping("usluga/{id}")
 	public ResponseEntity<Usluga> getOne(@PathVariable("id") Integer id){
 	    if (uslugaService.findById(id).isPresent()) {
@@ -44,12 +49,15 @@ public class UslugaController {
 	    }
 	}
 	
+    @ApiOperation(value = "Returns list of Uslugas containing string that was forwarded as path variable in 'naziv'.")
 	@GetMapping("usluga/naziv/{naziv}")
 	public ResponseEntity<List<Usluga>> getByNaziv(@PathVariable("naziv") String naziv){
 		List<Usluga> uslugas = uslugaService.findByNazivContainingIgnoreCase(naziv);
         return new ResponseEntity<>(uslugas, HttpStatus.OK);
 	}
 	
+
+    @ApiOperation(value = "Adds new Usluga to database.")
 	@PostMapping("usluga")
 	public ResponseEntity<Usluga> addUsluga(@RequestBody Usluga usluga) {
 		Usluga savedUsluga = uslugaService.save(usluga);
@@ -57,6 +65,7 @@ public class UslugaController {
 		return ResponseEntity.created(location).body(savedUsluga);
 	}
 
+    @ApiOperation(value = "Updates Usluga that has id that was forwarded as path variable with values forwarded in Request Body.")
     @PutMapping(value = "usluga/{id}")
     public ResponseEntity<Usluga> updateUsluga(@RequestBody Usluga usluga, @PathVariable("id") Integer id) {
         if (uslugaService.existsById(id)) {
@@ -67,6 +76,7 @@ public class UslugaController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 	
+    @ApiOperation(value = "Deletes Usluga with id that was forwarded as path variable.")
     @DeleteMapping("usluga/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if (id == -100 && !uslugaService.existsById(id)) {

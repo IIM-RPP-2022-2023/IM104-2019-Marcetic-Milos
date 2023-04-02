@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import rppbackend.model.Filijala;
 import rppbackend.service.FilijalaService;
 
+@CrossOrigin
 @RestController
 public class FilijalaController {
 
@@ -28,12 +31,14 @@ public class FilijalaController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @ApiOperation(value = "Returns List of all Filijalas")
 	@GetMapping("filijala")
 	public ResponseEntity<List<Filijala>> getAll(){
 		List<Filijala> filijals = filijalaService.getAll();
         return new ResponseEntity<>(filijals, HttpStatus.OK);
 	}
 	
+    @ApiOperation(value = "Returns Filijala with id that was forwarded as path variable.")
 	@GetMapping("filijala/{id}")
 	public ResponseEntity<Filijala> getOne(@PathVariable("id") Integer id){
 	    if (filijalaService.findById(id).isPresent()) {
@@ -44,12 +49,14 @@ public class FilijalaController {
 	    }
 	}
 	
+    @ApiOperation(value = "Returns list of Filijalas containing string that was forwarded as path variable in 'adresa'.")
 	@GetMapping("filijala/adresa/{adresa}")
 	public ResponseEntity<List<Filijala>> getByNaziv(@PathVariable("adresa") String adresa){
 		List<Filijala> filijals = filijalaService.findByNazivContainingIgnoreCase(adresa);
         return new ResponseEntity<>(filijals, HttpStatus.OK);
 	}
 	
+    @ApiOperation(value = "Adds new Filijala to database.")
 	@PostMapping("filijala")
 	public ResponseEntity<Filijala> addFilijala(@RequestBody Filijala filijala) {
 		Filijala savedFilijala = filijalaService.save(filijala);
@@ -57,6 +64,7 @@ public class FilijalaController {
 		return ResponseEntity.created(location).body(savedFilijala);
 	}
 
+    @ApiOperation(value = "Updates Filijala that has id that was forwarded as path variable with values forwarded in Request Body.")
     @PutMapping(value = "filijala/{id}")
     public ResponseEntity<Filijala> updateFilijala(@RequestBody Filijala filijala, @PathVariable("id") Integer id) {
         if (filijalaService.existsById(id)) {
@@ -67,6 +75,7 @@ public class FilijalaController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 	
+    @ApiOperation(value = "Deletes Filijala with id that was forwarded as path variable.")
     @DeleteMapping("filijala/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         if (id == -100 && !filijalaService.existsById(id)) {
