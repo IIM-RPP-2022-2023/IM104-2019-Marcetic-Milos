@@ -27,6 +27,7 @@ public class FilijalaService {
         return filijalaRepository.findByAdresaContainingIgnoreCase(adresa);
     }
 	
+	
 	public Filijala save(Filijala filijala) {
 		return filijalaRepository.save(filijala);
 	}

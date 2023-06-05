@@ -55,6 +55,7 @@ public class FilijalaController {
 		List<Filijala> filijals = filijalaService.findByNazivContainingIgnoreCase(adresa);
         return new ResponseEntity<>(filijals, HttpStatus.OK);
 	}
+    
 	
     @ApiOperation(value = "Adds new Filijala to database.")
 	@PostMapping("filijala")

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import rppbackend.model.KorisnikUsluge;
 import rppbackend.model.Usluga;
+import rppbackend.service.KorisnikUslugeService;
 import rppbackend.service.UslugaService;
 
 @CrossOrigin
@@ -27,6 +29,8 @@ public class UslugaController {
 
 	@Autowired
 	private UslugaService uslugaService;
+	@Autowired
+	private KorisnikUslugeService korisnikService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -48,7 +52,18 @@ public class UslugaController {
 	    	return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	    }
 	}
+    
+    @ApiOperation(value="Returns list of Usluga for KorisnikUsluge with id that was forwarded as path variable")
+    @GetMapping("uslugeZaKorisnika/{id}")
 	
+    public ResponseEntity<List<Usluga>> getAllForKorisnikUsluge(@PathVariable("id") Integer id){
+    	Optional<KorisnikUsluge> korisnikOpt = korisnikService.findById(id);
+    	if(korisnikOpt.isPresent()){
+    		List<Usluga> uslugas=uslugaService.findByKorisnik(korisnikOpt.get());
+    		return new ResponseEntity<>(uslugas,HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
     @ApiOperation(value = "Returns list of Uslugas containing string that was forwarded as path variable in 'naziv'.")
 	@GetMapping("usluga/naziv/{naziv}")
 	public ResponseEntity<List<Usluga>> getByNaziv(@PathVariable("naziv") String naziv){

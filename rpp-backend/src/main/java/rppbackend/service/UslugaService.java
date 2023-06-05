@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rppbackend.model.KorisnikUsluge;
 import rppbackend.model.Usluga;
 import rppbackend.repository.UslugaRepository;
 
@@ -22,6 +23,10 @@ public class UslugaService {
 	public Optional<Usluga> findById(Integer id) {
 		return uslugaRepository.findById(id);
 	}
+	
+	  public List<Usluga> findByKorisnik(KorisnikUsluge korisnik) {
+	        return uslugaRepository.findByKorisnik(korisnik);
+	    }
 	
 	public List<Usluga> findByNazivContainingIgnoreCase(String naziv) {
         return uslugaRepository.findByNazivContainingIgnoreCase(naziv);

@@ -9,4 +9,5 @@ import rppbackend.model.Filijala;
 public interface FilijalaRepository extends JpaRepository<Filijala, Integer> {
 
 	List<Filijala> findByAdresaContainingIgnoreCase(String adresa);
+	
 }

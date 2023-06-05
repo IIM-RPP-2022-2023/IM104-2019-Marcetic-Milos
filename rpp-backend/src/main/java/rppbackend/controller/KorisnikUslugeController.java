@@ -66,7 +66,7 @@ public class KorisnikUslugeController {
 
     @ApiOperation(value = "Updates KorisnikUsluge that has id that was forwarded as path variable with values forwarded in Request Body.")
     @PutMapping(value = "korisnik_usluge/{id}")
-    public ResponseEntity<KorisnikUsluge> updateDobavljac(@RequestBody KorisnikUsluge korisnik, @PathVariable("id") Integer id) {
+    public ResponseEntity<KorisnikUsluge> updateKorisnikUsluge(@RequestBody KorisnikUsluge korisnik, @PathVariable("id") Integer id) {
         if (korisnikService.existsById(id)) {
         	korisnik.setId(id);
         	KorisnikUsluge savedKorisnikUsluge = korisnikService.save(korisnik);
